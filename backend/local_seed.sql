@@ -34,4 +34,4 @@ CREATE TABLE user_transactions (
 
 -- Insert into the users table a default user for testing purposes
 INSERT INTO users (name, email, firebase_uid, cash_balance) VALUES
-("Default", "default@testing.com", "wzXjVkjADRPzXgZtnh304vh8u1f2", 5000);
+('Default', 'default@testing.com', 'wzXjVkjADRPzXgZtnh304vh8u1f2', 5000);
