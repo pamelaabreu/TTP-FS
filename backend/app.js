@@ -7,6 +7,7 @@ const cors = require("cors");
 const app = express();
 
 // Route File Imports
+const userRouter = require("./routes/users");
 
 // Middleware
 // Enable All CORS Requests
