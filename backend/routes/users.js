@@ -14,8 +14,16 @@ userRouter.post("/", (req, res, next) => {
     });
 });
 
-// READ - Read all user information by email
+// GET - Read all user information by email
+userRouter.get("/userInfo/:email", (req, res, next) => {
+    const { email } = req.params;
+    const message = `Successfully recieved email:${email}.`
+    res.status(200);
+    res.json({
+        message 
+    });
+});
 
-// READ - Read user's cash balance information by email
+// GET - Read user's cash balance information by email
 
 module.exports = userRouter;
