@@ -20,5 +20,7 @@ app.use(bodyParser.json());
 // Routes
 // Testing route
 app.use("/ping", (req, res) => {
-    res.json({"pong": true})
+  res.json({ pong: true });
 });
+
+module.exports = { app };
