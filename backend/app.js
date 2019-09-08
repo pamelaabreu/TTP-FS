@@ -6,7 +6,7 @@ const cors = require("cors");
 // Intialize Express App
 const app = express();
 
-// Routes
+// Route File Imports
 
 // Middleware
 // Enable All CORS Requests
@@ -16,3 +16,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Parses application/json
 app.use(bodyParser.json());
+
+// Routes
+// Testing route
+app.use("/ping", (req, res) => {
+    res.json({"pong": true})
+});
