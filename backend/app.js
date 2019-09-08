@@ -24,4 +24,7 @@ app.use("/ping", (req, res) => {
   res.json({ pong: true });
 });
 
+// User router
+app.use("/user", userRouter);
+
 module.exports = { app };
