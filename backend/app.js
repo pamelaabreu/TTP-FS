@@ -32,4 +32,7 @@ app.use("/user", userRouter);
 // Transactions endpoint
 app.use("/transactions", transactionsRouter);
 
+// Shares endpoint
+app.use("/shares", sharesRouter);
+
 module.exports = { app };
