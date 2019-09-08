@@ -5,7 +5,7 @@ const app = require("./app");
 const port = 3000;
 
 app.listen(port, () => {
-  console.log(`Share Portfolio Backend running on Port ${port}.`);
+  console.log(`Shares Portfolio Backend server running on Port ${ process.env.PORT || port}.`);
 });
 
 module.exports = { app };
