@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS stockportfolio;
 CREATE DATABASE stockportfolio;
 
-/c  stockportfolio;
+\c  stockportfolio;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
