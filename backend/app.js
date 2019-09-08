@@ -28,4 +28,7 @@ app.use("/ping", (req, res) => {
 // User endpoint
 app.use("/user", userRouter);
 
+// Transactions endpoint
+app.use("/transactions", transactionsRouter);
+
 module.exports = { app };
