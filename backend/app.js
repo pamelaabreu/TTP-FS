@@ -9,6 +9,7 @@ const app = express();
 // Routers File Imports
 const userRouter = require("./routes/users");
 const transactionsRouter = require("./routes/transactions");
+const sharesRouter = require("./routes/shares");
 
 // Middleware
 // Enable All CORS Requests
@@ -30,5 +31,8 @@ app.use("/user", userRouter);
 
 // Transactions endpoint
 app.use("/transactions", transactionsRouter);
+
+// Shares endpoint
+app.use("/shares", sharesRouter);
 
 module.exports = { app };
