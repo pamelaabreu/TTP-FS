@@ -11,3 +11,12 @@ CREATE TABLE users (
     email VARCHAR UNIQUE NOT NULL,
     cash_balance INT NOT NULL
 );
+
+CREATE TABLE user_shares (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    ticket VARCHAR NOT NULL,
+    shares_amount INT NOT NULL,
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+);
