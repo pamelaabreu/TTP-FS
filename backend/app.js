@@ -8,6 +8,7 @@ const app = express();
 
 // Routers File Imports
 const userRouter = require("./routes/users");
+const transactionsRouter = require("./routes/transactions");
 
 // Middleware
 // Enable All CORS Requests
