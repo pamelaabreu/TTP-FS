@@ -1,6 +1,9 @@
 // Dependencies
 const express = require("express");
 
+// Database Services
+const userServices = require("../services/users");
+
 // Initialize User Express Router
 const userRouter = express.Router();
 
