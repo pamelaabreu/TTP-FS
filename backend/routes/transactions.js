@@ -16,5 +16,14 @@ transactionsRouter.post("/", (req, res) => {
 });
 
 // GET - Read all transactions
+transactionsRouter.get("/:email", (req, res) => {
+    const { email } = req.params;
+    const message = `Successfully recieved email: ${email} for all transactions.`;
+  
+    res.status(200);
+    res.json({
+      message
+    });
+  });
 
 module.exports = transactionsRouter;
