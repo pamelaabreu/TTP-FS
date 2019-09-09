@@ -36,5 +36,23 @@ transactionService.create = (
 };
 
 // Read all transactions
+transactionService.readAllUserTransaction = email => {
+  // First read the user email and return the user id associated with the email
+  return userService.readAllUserInfo(email).then(({ id }) => {
+    // Second read all of the user's transactions
+    const sql = `
+        SELECT
+            user_transactions.*
+        FROM
+            user_transactions
+        WHERE
+            user_id = $[id]
+        ORDER BY 
+            user_transactions.created_at DESC
+        `;
+
+    return db.any(sql, { id });
+  });
+};
 
 module.exports = transactionService;
