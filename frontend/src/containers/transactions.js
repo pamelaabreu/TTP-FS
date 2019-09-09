@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 
 const Transactions = props => {
+    const [transactionsList, updateTransactionsList] = useState([]);
+
     return (
         <div>
             <h1>Transactions</h1>
