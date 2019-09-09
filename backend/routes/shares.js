@@ -1,6 +1,9 @@
 // Dependencies
 const express = require("express");
 
+// Database Services
+const shareService = require("../services/shares");
+
 // Initialize Shares Express Router
 const sharesRouter = express.Router();
 
