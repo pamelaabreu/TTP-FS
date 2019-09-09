@@ -43,5 +43,16 @@ userService.readUserCashBalance = email => {
 };
 
 // Update user's cash balance
+userService.updateUserCashBalance = (email, cash_balance) => {
+  const sql = `
+    UPDATE users
+    SET
+        cash_balance = $[cash_balance]
+    WHERE
+        users.email = $[email]
+    `;
+
+  return db.none(sql, { email, cash_balance });
+};
 
 module.exports = userService;
