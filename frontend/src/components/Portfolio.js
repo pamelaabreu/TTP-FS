@@ -1,13 +1,13 @@
 // Dependencies
 import React from "react";
 
+// Component
+import Shares from "../containers/Shares";
+
 const Portfolio = props => {
   return (
     <div>
-      <div>
-        <h1>Portfolio ($Cash Amount)</h1>
-        <p>Display shares here</p>
-      </div>
+        <Shares />
       <div>
         <h3>Cash - $Users Balance</h3>
         <form>
@@ -31,11 +31,11 @@ const Portfolio = props => {
             required
           />
           <button
-          type="submit button"
-        //   disabled
-        >
-          Next
-        </button>
+            type="submit button"
+            //   disabled
+          >
+            Next
+          </button>
         </form>
       </div>
     </div>
