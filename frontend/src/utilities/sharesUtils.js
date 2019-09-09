@@ -34,22 +34,36 @@ sharesUtils.matchAgainstOpeningPrice = (
 // Add total amount of all shares
 
 // Convert shares array to reflect current price and performance
-// sharesArray.map(value => {
-//   const { ticket, shares_amount } = value;
+sharesUtils.convertSharesArray = data => {
+  return data.map(value => {
+    const { ticket, shares_amount } = value;
+    let currentPrice = 0;
+    let performance = null;
 
-//   return { ticket, shares_amount, currentPrice };
-// });
+    // Get current price for each share amount
+    const getCurrentPrice = sharesUtils.convertSharesToCurrentPrice(
+      ticket,
+      shares_amount
+    );
 
-// .then(({lastSalePrice}) => {
-//     console.log("readStockInformation data:", lastSalePrice)
-//     return IEXAPIService.readOpeningPrice("AA")
-// })
-// .then((data) => {
-//     console.log("readOpeningPrice data:", data)
-//     return IEXAPIService.readAllSymbols()
-// })
-// .then((data) => {
-//     console.log("readAllSymbols data:", data)
-// })
+    // Rate performances
+    getCurrentPrice
+      .then(convertedCurrentPrice => {
+        // Set current price
+        currentPrice = parseInt(convertedCurrentPrice);
+        return sharesUtils.matchAgainstOpeningPrice(
+          convertedCurrentPrice,
+          ticket,
+          shares_amount
+        );
+      })
+      .then(matchPerformance => {
+        // Set performance
+        performance = matchPerformance;
+      });
+
+    return { ticket, shares_amount, currentPrice, performance };
+  });
+};
 
 export default sharesUtils;
