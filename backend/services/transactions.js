@@ -16,24 +16,25 @@ transactionService.create = (
   transaction_price
 ) => {
   // First read the user email and return the user id associated with the email
-  return userService.readAllUserInfo(email).then(({ id }) => {
-    // Second create the transaction
+  const createTransaction = userService
+    .readAllUserInfo(email)
+    .then(({ id }) => {
+      // Second create the transaction
 
-    const sql = `
+      const sql = `
         INSERT INTO user_transactions (ticket, shares_amount, transaction_price, user_id) VALUES
-        ($[ticket], $[shares_amount], $[transaction_price], $[user_id]) RETURNING id;
+        ($[ticket], $[shares_amount], $[transaction_price], $[user_id]) RETURNING id, user_id, ticket, shares_amount;
         `;
 
-    return db.one(sql, {
-      ticket,
-      shares_amount,
-      transaction_price,
-      user_id: id
+      return db.one(sql, {
+        ticket,
+        shares_amount,
+        transaction_price,
+        user_id: id
+      });
     });
-  });
 
-  // update share || create new share
-  // update user's cash balance
+  return createTransaction;
 };
 
 // Read all transactions
