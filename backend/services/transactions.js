@@ -37,7 +37,7 @@ transactionService.create = (
       });
     });
 
-  // Second, ff user already has shares, update the shares, else create new share
+  // Second, if user already has shares, update the shares, else create new share
   const updateOrCreateUserShares = createTransaction
     .then(({ user_id, ticket, shares_amount }) => {
       transactionInformation = { user_id, ticket, shares_amount };
