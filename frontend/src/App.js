@@ -6,6 +6,7 @@ import './App.css';
 
 // Pages
 import Transactions from "./containers/Transactions";
+import Portfolio from "./components/Portfolio";
 
 const App = () => {
   return (
