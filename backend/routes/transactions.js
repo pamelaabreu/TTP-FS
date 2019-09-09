@@ -8,7 +8,7 @@ const transactionService = require("../services/transactions");
 const transactionsRouter = express.Router();
 
 // POST - Create transaction
-transactionsRouter.post("/", (req, res) => {
+transactionsRouter.post("/", (req, res, next) => {
   const { email, ticket, shares_amount, transaction_price } = req.body;
 
   transactionService
@@ -21,18 +21,30 @@ transactionsRouter.post("/", (req, res) => {
         data,
         message
       });
+    })
+    .catch(err => {
+      next(err);
     });
 });
 
 // GET - Read all of a user's transactions
-transactionsRouter.get("/allUserTransactions/:email", (req, res) => {
+transactionsRouter.get("/allUserTransactions/:email", (req, res, next) => {
   const { email } = req.params;
-  const message = `Successfully recieved email: ${email} for all transactions.`;
 
-  res.status(200);
-  res.json({
-    message
-  });
+  transactionService
+    .readAllUserTransaction(email)
+    .then(data => {
+      const message = `Successfully recieved email: ${email} for all transactions.`;
+
+      res.status(200);
+      res.json({
+        data,
+        message
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
 });
 
 module.exports = transactionsRouter;
