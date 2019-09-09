@@ -16,13 +16,18 @@ const Shares = props => {
   // Updates the sharesList and portfolioAmount
   useEffect(() => {
     if (sharesList.length === 0) {
-      sharesAPIService.readAllShares("default@testing.com")
-      .then(({ data }) => sharesUtils.convertSharesArray(data))
-      .then(convertedData => {
-        const totalPortfolioAmount = sharesUtils.addTotal(convertedData);
-        setPortfolioAmount(totalPortfolioAmount);
-        setSharesList(convertedData);
-      })
+      sharesAPIService
+        .readAllShares("default@testing.com")
+        .then(({ data }) => {
+          // Convert data set to include currentPrice and perfomance values
+          return sharesUtils.convertSharesArray(data);
+        })
+        .then(convertedData => {
+          // Convert data set to include currentPrice and perfomance values
+          const totalPortfolioAmount = sharesUtils.addTotal(convertedData);
+          setSharesList(convertedData);
+          setPortfolioAmount(totalPortfolioAmount);
+        });
     }
   }, [sharesList, portfolioAmount]);
 
@@ -31,7 +36,8 @@ const Shares = props => {
       <h1>Portfolio (${portfolioAmount})</h1>
       <div>
         {sharesList.map((value, index) => {
-          const transactionNote = `Ticket - shares_amount Shares $CurrentValue.00`;
+          const { currentPrice, performance, shares_amount, ticket } = value;
+          const transactionNote = `${ticket.toUpperCase()} - ${shares_amount} Shares $${currentPrice}.00`;
           return <ListItems key={index} note={transactionNote} />;
         })}
       </div>
