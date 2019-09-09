@@ -15,6 +15,18 @@ userService.create = (name, email, firebase_uid) => {
 };
 
 // Read all user information by email
+userService.readAllUserInfo = email => {
+  const sql = `
+    SELECT
+        users.*
+    FROM
+        users
+    WHERE
+        users.email = $[email]
+    `;
+
+  return db.one(sql, { email });
+};
 
 // Read user's cash balance information by email
 
