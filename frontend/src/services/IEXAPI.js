@@ -18,8 +18,7 @@ IEXAPIService.readOpeningPrice = symbol =>
     .then(res => res.data);
 
 // GET - Current Stock Information
-IEXAPIService.readStockInformation = symbol =>
-  axios
+IEXAPIService.readStockInformation = symbol => axios
     .get(`${baseUrl}/deep?symbols=${symbol.toUpperCase()}`)
     .then(res => res.data);
 
