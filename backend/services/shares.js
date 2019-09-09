@@ -1,6 +1,9 @@
 // Database Connection
 const { db } = require("./dbConnect");
 
+// Database Services
+const userService = require("./users");
+
 // Inital shares service object
 const shareService = {};
 
