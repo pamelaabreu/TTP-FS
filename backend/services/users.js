@@ -29,5 +29,19 @@ userService.readAllUserInfo = email => {
 };
 
 // Read user's cash balance information by email
+userService.readUserCashBalance = email => {
+  const sql = `
+      SELECT
+          users.cash_balance
+      FROM
+          users
+      WHERE
+          users.email = $[email]
+      `;
+
+  return db.one(sql, { email });
+};
+
+// Update user's cash balance
 
 module.exports = userService;
