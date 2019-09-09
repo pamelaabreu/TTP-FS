@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from "react";
 
 const TransactionForm = props => {
+  const [cashBalance, setCashBalance] = useState(0);
+  const [ticket, setTicket] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [buttonDisable, setButtonDisable] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  
   return (
     <div>
       <h3>Cash - $Users Balance</h3>
