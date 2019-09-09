@@ -3,6 +3,7 @@ const { db } = require("./dbConnect");
 
 // Database Services
 const userService = require("./users");
+const shareService = require("./shares");
 
 // Inital transaction service object
 const transactionService = {};
@@ -14,25 +15,50 @@ transactionService.create = (
   shares_amount,
   transaction_price
 ) => {
-  // First read the user email and return the user id associated with the email
-  return userService.readAllUserInfo(email).then(({ id }) => {
-    // Second create the transaction
+  // Variable to be used if user has no existing share
+  let transactionInformation = null;
 
-    const sql = `
+  // First read the user email and return the user id associated with the email
+  const createTransaction = userService
+    .readAllUserInfo(email)
+    .then(({ id }) => {
+      // Second create the transaction
+
+      const sql = `
         INSERT INTO user_transactions (ticket, shares_amount, transaction_price, user_id) VALUES
-        ($[ticket], $[shares_amount], $[transaction_price], $[user_id]) RETURNING id;
+        ($[ticket], $[shares_amount], $[transaction_price], $[user_id]) RETURNING id, user_id, ticket, shares_amount;
         `;
 
-    return db.one(sql, {
-      ticket,
-      shares_amount,
-      transaction_price,
-      user_id: id
+      return db.one(sql, {
+        ticket,
+        shares_amount,
+        transaction_price,
+        user_id: id
+      });
     });
-  });
 
-  // update share || create new share
+  // If user already has shares, update the shares, else create new share
+  const updateOrCreateUserShares = createTransaction
+    .then(({ user_id, ticket, shares_amount }) => {
+      transactionInformation = { user_id, ticket, shares_amount };
+      return shareService.readShare(ticket, user_id);
+    })
+    .then(
+      ({ user_id, ticket, shares_amount }) => {
+        // Update user's share
+        const newSharesAmount = shares_amount + transactionInformation.shares_amount;
+
+        return shareService.updateShare(ticket, newSharesAmount, user_id);
+      },
+      error => {
+        // Create new share
+        const { ticket, shares_amount, user_id } = transactionInformation;
+        return shareService.create(ticket, shares_amount, user_id);
+      }
+    );
+
   // update user's cash balance
+  return updateOrCreateUserShares;
 };
 
 // Read all transactions
