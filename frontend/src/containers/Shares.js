@@ -38,7 +38,13 @@ const Shares = props => {
         {sharesList.map((value, index) => {
           const { currentPrice, performance, shares_amount, ticket } = value;
           const transactionNote = `${ticket.toUpperCase()} - ${shares_amount} Shares $${currentPrice}.00`;
-          return <ListItems key={index} note={transactionNote} />;
+          return (
+            <ListItems
+              key={index}
+              note={transactionNote}
+              performance={performance}
+            />
+          );
         })}
       </div>
     </div>
