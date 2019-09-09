@@ -8,8 +8,8 @@ import TransactionForm from "../containers/TransactionForm";
 const Portfolio = props => {
   return (
     <div>
-        <Shares />
-        <TransactionForm />
+      <Shares />
+      <TransactionForm />
     </div>
   );
 };
