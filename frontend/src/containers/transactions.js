@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 // Services
 import transactionsAPIService from "../services/transactionsAPI";
 
+// Component
+import ListItems from "../components/ListItems";
+
 const Transactions = props => {
   const [transactionsList, setTransactionsList] = useState([]);
 
