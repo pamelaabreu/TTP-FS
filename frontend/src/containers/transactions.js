@@ -23,7 +23,18 @@ const Transactions = props => {
     <div>
       <h1>Transactions</h1>
       <div>
-        <p>Display Transactions</p>
+        {
+            transactionsList.map((value, index) => {
+                const {shares_amount, ticket, transaction_price} = value;
+                const transactionNote = `BUY (${ticket}) - ${shares_amount} Shares @ ${transaction_price}.00`;
+                
+                return (
+                    <p key={index}>
+                        {transactionNote}
+                    </p>
+                );
+            })
+        }
       </div>
     </div>
   );
