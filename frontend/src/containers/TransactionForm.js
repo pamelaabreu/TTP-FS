@@ -31,7 +31,7 @@ const TransactionForm = props => {
           aria-label="Ticket"
           aria-describedby="Ticket"
           required
-          // onChange={updateTicket}
+          onChange={e => setTicket(e.target.value)}
         />
 
         <label htmlFor="quantity">QTY</label>
