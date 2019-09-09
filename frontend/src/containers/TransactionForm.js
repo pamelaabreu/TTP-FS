@@ -3,13 +3,19 @@ import React, { useState, useEffect } from "react";
 
 // Services
 import usersAPIService from "../services/usersAPI";
+import transactionFormUtils from "../utilities/transactionFormUtils";
 
 const TransactionForm = props => {
   const [cashBalance, setCashBalance] = useState(0);
+
   const [ticket, setTicket] = useState("");
+  const [isValidTicket, setIsValidTicket] = useState(false);
+  const [ticketAmount, setTicketAmount] = useState(0);
+
   const [quantity, setQuantity] = useState("");
+
   const [buttonDisable, setButtonDisable] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   // Updates the user's cashBalance
   useEffect(() => {
@@ -17,6 +23,20 @@ const TransactionForm = props => {
       usersAPIService.readAllUserCashBalance("default@testing.com").then(({data}) => setCashBalance(data.cash_balance))
     }
   }, [cashBalance]);
+
+  // Validate ticket
+  useEffect(() => {
+    if(ticket.length > 0){
+      const isValid = transactionFormUtils.checkValidTicket(ticket);
+      if(isValid){
+        setIsValidTicket(true);
+        // remove error messgae
+      } else {
+        setIsValidTicket(false);
+        // set error message
+      }
+    };  
+  }, [ticket]);
 
   return (
     <div>
