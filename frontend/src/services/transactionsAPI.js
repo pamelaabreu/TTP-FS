@@ -8,10 +8,9 @@ import baseUrl from "./backendUrlConnect";
 const transactionsAPIService = {};
 
 // Read all transactions
-transactionsAPIService.readAllUserTransaction = email => {
-  return axios
+transactionsAPIService.readAllUserTransaction = email =>
+  axios
     .get(`${baseUrl}/transactions/allUserTransactions/${email}`)
     .then(res => res.data);
-};
 
 export default transactionsAPIService;
