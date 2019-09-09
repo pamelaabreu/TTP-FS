@@ -1,10 +1,14 @@
 // Dependencies
 import axios from "axios";
 
-// Base Url for Express API Endpoint
-import baseUrl from "./backendUrlConnect";
+// Base Url for IEX API Endpoint
+const baseUrl = "https://api.iextrading.com/1.0";
 
 // Inital IEX API service object
 const IEXAPIService = {};
+
+// GET - Symbols
+IEXAPIService.readAllSymbols = () =>
+  axios.get(`${baseUrl}/ref-data/symbols`).then(res => res.data);
 
 export default IEXAPIService;
