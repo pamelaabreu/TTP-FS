@@ -15,6 +15,9 @@ transactionService.create = (
   shares_amount,
   transaction_price
 ) => {
+  // Variable to be used if user has no existing share
+  let transactionInformation = null;
+
   // First read the user email and return the user id associated with the email
   const createTransaction = userService
     .readAllUserInfo(email)
@@ -34,7 +37,28 @@ transactionService.create = (
       });
     });
 
-  return createTransaction;
+  // If user already has shares, update the shares, else create new share
+  const updateOrCreateUserShares = createTransaction
+    .then(({ user_id, ticket, shares_amount }) => {
+      transactionInformation = { user_id, ticket, shares_amount };
+      return shareService.readShare(ticket, user_id);
+    })
+    .then(
+      ({ user_id, ticket, shares_amount }) => {
+        // Update user's share
+        const newSharesAmount = shares_amount + transactionInformation.shares_amount;
+
+        return shareService.updateShare(ticket, newSharesAmount, user_id);
+      },
+      error => {
+        // Create new share
+        const { ticket, shares_amount, user_id } = transactionInformation;
+        return shareService.create(ticket, shares_amount, user_id);
+      }
+    );
+
+  // update user's cash balance
+  return updateOrCreateUserShares;
 };
 
 // Read all transactions
