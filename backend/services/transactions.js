@@ -3,6 +3,7 @@ const { db } = require("./dbConnect");
 
 // Database Services
 const userService = require("./users");
+const shareService = require("./shares");
 
 // Inital transaction service object
 const transactionService = {};
