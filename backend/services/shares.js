@@ -46,5 +46,21 @@ shareService.readShare = (ticket, user_id) => {
 };
 
 // Read all users's shares
+shareService.readAllShares = (email) => {
+    // First read the user email and return the user id associated with the email
+  return userService.readAllUserInfo(email).then(({ id }) => {
+    // Second read all of the user's shares
+    const sql = `
+        SELECT
+            user_shares.*
+        FROM
+            user_shares
+        WHERE
+            user_id = $[id]
+        `;
+
+    return db.any(sql, { id });
+  });
+};
 
 module.exports = shareService;
