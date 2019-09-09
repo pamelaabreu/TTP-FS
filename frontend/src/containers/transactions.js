@@ -1,6 +1,9 @@
 // Dependencies
 import React, { useState, useEffect } from "react";
 
+// Services
+import transactionsAPIService from "../services/transactionsAPI";
+
 const Transactions = props => {
     const [transactionsList, updateTransactionsList] = useState([]);
 
