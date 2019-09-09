@@ -5,23 +5,30 @@ import IEXAPIService from "../services/IEXAPI";
 const sharesUtils = {};
 
 // Convert shares to reflect current price
-sharesUtils.convertSharesToCurrentPrice = (ticket, shares_amount) => {
-  let currentPrice = 0;
-
+sharesUtils.convertSharesToCurrentPrice = (ticket, shares_amount) =>
   IEXAPIService.readStockInformation(ticket).then(
-    ({ lastSalePrice }) => (currentPrice = shares_amount * lastSalePrice)
+    ({ lastSalePrice }) => shares_amount * lastSalePrice
   );
 
-  return currentPrice;
-};
-
 // Rate current price of shares against opening price
-sharesUtils.matchAgainstOpeningPrice = (currentPrice, symbol) => {
-    IEXAPIService.readOpeningPrice(symbol).then(data => {
-            console.log("readOpeningPrice data:", data)
-    //         "priceType": "Open",
-    // "price": 1.05,
-    })
+sharesUtils.matchAgainstOpeningPrice = (
+  currentPrice,
+  symbol,
+  shares_amount
+) => {
+  return IEXAPIService.readOpeningPrice(symbol).then(data => {
+    if (data.price) {
+      const price = data.price;
+      const openingPriceValue = parseInt(price * shares_amount);
+      const currentPriceValue = parseInt(currentPrice);
+
+      if (openingPriceValue > currentPriceValue) return { color: "red" };
+      else if (openingPriceValue < currentPriceValue) return { color: "green" };
+      else return { color: "grey" };
+    } else {
+      return { color: "grey" };
+    }
+  });
 };
 
 // Add total amount of all shares
