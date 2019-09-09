@@ -11,4 +11,9 @@ const IEXAPIService = {};
 IEXAPIService.readAllSymbols = () =>
   axios.get(`${baseUrl}/ref-data/symbols`).then(res => res.data);
 
+// GET - Opening Price
+IEXAPIService.readOpeningPrice = (symbol) =>
+  axios.get(`${baseUrl}/deep/official-price?symbols=${symbol.toLowerCase()}`).then(res => res.data);
+  
+
 export default IEXAPIService;
