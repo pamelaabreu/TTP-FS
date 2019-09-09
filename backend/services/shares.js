@@ -19,7 +19,7 @@ shareService.create = (ticket, shares_amount, user_id) => {
 
 // Update shares
 shareService.updateShare = (ticket, shares_amount, user_id) => {
-    const sql = `
+  const sql = `
     UPDATE user_shares
     SET
         shares_amount = $[shares_amount]
@@ -28,8 +28,8 @@ shareService.updateShare = (ticket, shares_amount, user_id) => {
     RETURNING ticket, shares_amount;
     `;
 
-    return db.one(sql, { ticket, shares_amount, user_id });
-  };
+  return db.one(sql, { ticket, shares_amount, user_id });
+};
 
 // Read share
 shareService.readShare = (ticket, user_id) => {
@@ -46,8 +46,8 @@ shareService.readShare = (ticket, user_id) => {
 };
 
 // Read all users's shares
-shareService.readAllShares = (email) => {
-    // First read the user email and return the user id associated with the email
+shareService.readAllShares = email => {
+  // First read the user email and return the user id associated with the email
   return userService.readAllUserInfo(email).then(({ id }) => {
     // Second read all of the user's shares
     const sql = `

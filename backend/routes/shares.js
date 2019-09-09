@@ -11,18 +11,20 @@ const sharesRouter = express.Router();
 sharesRouter.get("/all/:email", (req, res, next) => {
   const { email } = req.params;
 
-  shareService.readAllShares(email).then(data => {
-    const message = `Successfully recieved email: ${email} for all shares.`;
+  shareService
+    .readAllShares(email)
+    .then(data => {
+      const message = `Successfully recieved email: ${email} for all shares.`;
 
-    res.status(200);
-    res.json({
-      data,
-      message
+      res.status(200);
+      res.json({
+        data,
+        message
+      });
+    })
+    .catch(err => {
+      next(err);
     });
-  })
-  .catch(err => {
-    next(err);
-  });
 });
 
 module.exports = sharesRouter;
