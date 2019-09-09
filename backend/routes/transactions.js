@@ -19,7 +19,7 @@ transactionsRouter.post("/", (req, res) => {
 });
 
 // GET - Read all transactions
-transactionsRouter.get("/:email", (req, res) => {
+transactionsRouter.get("/allUserTransactions/:email", (req, res) => {
   const { email } = req.params;
   const message = `Successfully recieved email: ${email} for all transactions.`;
 
