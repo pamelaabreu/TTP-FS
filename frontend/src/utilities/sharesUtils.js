@@ -19,8 +19,8 @@ sharesUtils.matchAgainstOpeningPrice = (
   return IEXAPIService.readOpeningPrice(symbol).then(data => {
     if (data.price) {
       const price = data.price;
-      const openingPriceValue = parseInt(price * shares_amount);
-      const currentPriceValue = parseInt(currentPrice);
+      const openingPriceValue = price * shares_amount;
+      const currentPriceValue = currentPrice;
 
       if (openingPriceValue > currentPriceValue) return { color: "red" };
       else if (openingPriceValue < currentPriceValue) return { color: "green" };
@@ -33,45 +33,40 @@ sharesUtils.matchAgainstOpeningPrice = (
 
 // Add total amount of all shares
 sharesUtils.addTotal = data => {
-    let sum = 0;
-    for(let i=0; i<data.length; i++){
-        sum += data[i].currentPrice;
-    }
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += data[i].currentPrice;
+  }
 
-    return sum;
+  return sum;
 };
 
 // Convert shares array to reflect current price and performance
 sharesUtils.convertSharesArray = data => {
-  return data.map(value => {
-    const { ticket, shares_amount } = value;
-    let currentPrice = 0;
-    let performance = null;
-
-    // Get current price for each share amount
-    const getCurrentPrice = sharesUtils.convertSharesToCurrentPrice(
-      ticket,
-      shares_amount
-    );
-
-    // Rate performances
-    getCurrentPrice
-      .then(convertedCurrentPrice => {
-        // Set current price
-        currentPrice = parseInt(convertedCurrentPrice);
-        return sharesUtils.matchAgainstOpeningPrice(
-          convertedCurrentPrice,
+  // Resolve array of promises
+  return Promise.all(
+    data.map(async value => {
+      const { ticket, shares_amount } = value;
+      try {
+        // Get current price for each share amount
+        const currentPrice = await sharesUtils.convertSharesToCurrentPrice(
           ticket,
           shares_amount
         );
-      })
-      .then(matchPerformance => {
-        // Set performance
-        performance = matchPerformance;
-      });
 
-    return { ticket, shares_amount, currentPrice, performance };
-  });
+        // Rate performances
+        const performance = await sharesUtils.matchAgainstOpeningPrice(
+          currentPrice,
+          ticket,
+          shares_amount
+        );
+
+        return { ticket, shares_amount, currentPrice, performance };
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    })
+  );
 };
 
 export default sharesUtils;
