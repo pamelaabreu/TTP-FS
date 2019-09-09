@@ -32,6 +32,14 @@ sharesUtils.matchAgainstOpeningPrice = (
 };
 
 // Add total amount of all shares
+sharesUtils.addTotal = data => {
+    let sum = 0;
+    for(let i=0; i<data.length; i++){
+        sum += data[i].currentPrice;
+    }
+
+    return sum;
+};
 
 // Convert shares array to reflect current price and performance
 sharesUtils.convertSharesArray = data => {
