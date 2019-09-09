@@ -37,7 +37,7 @@ transactionService.create = (
       });
     });
 
-  // If user already has shares, update the shares, else create new share
+  // Second, ff user already has shares, update the shares, else create new share
   const updateOrCreateUserShares = createTransaction
     .then(({ user_id, ticket, shares_amount }) => {
       transactionInformation = { user_id, ticket, shares_amount };
@@ -57,7 +57,9 @@ transactionService.create = (
       }
     );
 
-  // update user's cash balance
+  // Third, update user's cash balance
+  userService.updateUserCashBalance(email, transaction_price);
+
   return updateOrCreateUserShares;
 };
 
