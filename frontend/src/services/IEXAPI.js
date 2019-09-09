@@ -14,13 +14,13 @@ IEXAPIService.readAllSymbols = () =>
 // GET - Opening Price
 IEXAPIService.readOpeningPrice = symbol =>
   axios
-    .get(`${baseUrl}/deep/official-price?symbols=${symbol.toLowerCase()}`)
+    .get(`${baseUrl}/deep/official-price?symbols=${symbol.toUpperCase()}`)
     .then(res => res.data);
 
 // GET - Current Stock Information
 IEXAPIService.readStockInformation = symbol =>
   axios
-    .get(`${baseUrl}/deep?symbols=${symbol.toLowerCase()}`)
+    .get(`${baseUrl}/deep?symbols=${symbol.toUpperCase()}`)
     .then(res => res.data);
 
 export default IEXAPIService;
