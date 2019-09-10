@@ -15,11 +15,13 @@ const App = () => {
     <HashRouter>
       <div className="App">
         <header className="App-header">
-          <Navbar />
+          <Route path="/" component={Navbar} />
         </header>
         <div>
-          <Transactions />
-          <Portfolio />
+          <Switch>
+            <Route path="/transactions" exact component={Transactions} />
+            <Route path="/portfolio" exact component={Portfolio} />
+          </Switch>
         </div>
       </div>
     </HashRouter>
