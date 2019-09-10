@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <HashRouter>
-      <div className="App">
+      <div className="container-fluid d-flex justify-content-center align-items-center vh-100 bg-dark">
         {!FirebaseUserAuth.user ? (
           <Route path="/" component={ShowLoginOrSignup} />
         ) : (
