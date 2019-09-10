@@ -19,6 +19,10 @@ class FirebaseAuthProvider extends React.Component {
       }
     });
   }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 }
 
 export default FirebaseAuthProvider;
