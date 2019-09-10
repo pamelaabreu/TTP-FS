@@ -7,7 +7,7 @@ const sharesUtils = {};
 // Convert shares to reflect current price
 sharesUtils.convertSharesToCurrentPrice = (ticket, shares_amount) =>
   IEXAPIService.readStockInformation(ticket).then(
-    ({ lastSalePrice }) => shares_amount * lastSalePrice
+    ({ lastSalePrice }) => Math.round(shares_amount * lastSalePrice)
   );
 
 // Rate current price of shares against opening price
@@ -22,11 +22,11 @@ sharesUtils.matchAgainstOpeningPrice = (
       const openingPriceValue = price * shares_amount;
       const currentPriceValue = currentPrice;
 
-      if (openingPriceValue > currentPriceValue) return { color: "red" };
-      else if (openingPriceValue < currentPriceValue) return { color: "green" };
-      else return { color: "grey" };
+      if (openingPriceValue > currentPriceValue) return { color: "text-danger" };
+      else if (openingPriceValue < currentPriceValue) return { color: "text-success" };
+      else return { color: "text-muted" };
     } else {
-      return { color: "grey" };
+      return { color: "text-muted" };
     }
   });
 };
