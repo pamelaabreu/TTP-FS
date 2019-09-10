@@ -20,7 +20,7 @@ const Navbar = withRouter(props => {
         <></>
       ) : (
         <div className="nav d-flex justify-content-between">
-          <button className="h3 btn btn-primary m-3" onClick={UserLogout}>
+          <button className="h3 btn btn-info m-3" onClick={UserLogout}>
             Logout
           </button>
           <div className="d-flex">
