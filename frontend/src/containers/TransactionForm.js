@@ -69,10 +69,12 @@ const TransactionForm = props => {
         <input
           type="text"
           name="quantity"
+          value={quantity}
           placeholder="Quantity"
           aria-label="Quantity"
           aria-describedby="Quantity"
           required
+          onChange={e => setQuantity(e.target.value)}
         />
         <button
           type="submit button"
