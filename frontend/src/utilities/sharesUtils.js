@@ -24,9 +24,9 @@ sharesUtils.matchAgainstOpeningPrice = (
 
       if (openingPriceValue > currentPriceValue) return { color: "text-danger" };
       else if (openingPriceValue < currentPriceValue) return { color: "text-success" };
-      else return { color: "text-muted" };
+      else return { color: "text-secondary" };
     } else {
-      return { color: "text-muted" };
+      return { color: "text-secondary" };
     }
   });
 };
