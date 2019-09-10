@@ -130,7 +130,7 @@ const TransactionForm = props => {
           onChange={e => setQuantity(e.target.value)}
         />
         <button type="submit button" onClick={buyShare}>
-          Next
+          Buy
         </button>
       </form>
     </div>
