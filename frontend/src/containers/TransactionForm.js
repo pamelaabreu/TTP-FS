@@ -39,15 +39,32 @@ const TransactionForm = props => {
     };  
   }, [ticket]);
 
+  // Validate quantity
+  useEffect(() => {
+    if(quantity.length > 0){
+      const isValid = transactionFormUtils.isWholeNum(quantity);
+
+      if(isValid){
+        setIsValidQuantity(true);
+        // remove error messgae
+      } else {
+        setIsValidQuantity(false);
+      }
+    }
+  }, [quantity]);
+
   // Get ticket amount
   useEffect(() => {
     if(isValidTicket && isValidQuantity){
       const currentPrice = transactionFormUtils.getTicketPrice(ticket.toUpperCase(), parseInt(quantity));
+      console.log("Current Price", currentPrice)
       setTicketAmount(currentPrice);
     } else {
       setTicketAmount(0);
     }
   }, [isValidTicket, isValidQuantity]);
+
+  useEffect(() => console.log("ticketAmount", ticketAmount))
 
   return (
     <div>
@@ -67,7 +84,7 @@ const TransactionForm = props => {
 
         <label htmlFor="quantity">QTY</label>
         <input
-          type="text"
+          type="number"
           name="quantity"
           value={quantity}
           placeholder="Quantity"
