@@ -14,12 +14,9 @@ const TransactionForm = props => {
   const [isValidTicket, setIsValidTicket] = useState(false);
 
   const [ticketAmount, setTicketAmount] = useState(0);
-  const [isValidTicketAmount, setIsValidTicketAmount] = useState(false);
 
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
-
-  const [errorMessages, setErrorMessages] = useState([]);
 
   // Updates the user's cashBalance
   useEffect(() => {
