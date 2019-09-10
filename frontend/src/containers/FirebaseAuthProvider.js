@@ -1,5 +1,14 @@
+// Dependencies
 import React from "react";
+import firebase from "../firebase";
 
-class FirebaseAuthProvider extends React.Component {}
+// Page
+import App from "../App";
+
+class FirebaseAuthProvider extends React.Component {
+  state = {
+    user: null
+  };
+}
 
 export default FirebaseAuthProvider;
