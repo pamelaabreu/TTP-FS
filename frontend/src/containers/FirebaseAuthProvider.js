@@ -23,6 +23,9 @@ class FirebaseAuthProvider extends React.Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+
+  logoutUser = () => firebase.auth().signOut();
 }
 
 export default FirebaseAuthProvider;
