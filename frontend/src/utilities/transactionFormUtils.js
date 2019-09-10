@@ -30,6 +30,11 @@ transactionFormUtils.getTicketPrice = async (ticket, shares_amount) => {
 };
 
 // Check if quantity is whole number
+transactionFormUtils.isWholeNum = quantity => {
+  if (parseInt(quantity) === 0) return false;
+  if (quantity.includes(".")) return false;
+  else return true;
+};
 
 // Check if cashBalance enough
 
