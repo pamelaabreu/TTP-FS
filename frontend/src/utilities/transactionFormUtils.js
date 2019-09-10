@@ -37,5 +37,10 @@ transactionFormUtils.isWholeNum = quantity => {
 };
 
 // Check if cashBalance enough
+transactionFormUtils.isEnoughCash = (cashBalance, ticketAmount) => {
+    const subtractSum = cashBalance - ticketAmount;
+    if(subtractSum >= 1) return true;
+    else return false;
+};
 
 export default transactionFormUtils;
