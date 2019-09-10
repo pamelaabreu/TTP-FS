@@ -3,11 +3,11 @@
 // More information: https://support.google.com/firebase/answer/7015592?hl=en
 
 export default {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
-  };
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
