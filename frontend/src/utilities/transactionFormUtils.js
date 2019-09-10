@@ -1,5 +1,6 @@
 // Services
 import IEXAPIService from "../services/IEXAPI";
+import sharesUtils from "./sharesUtils";
 
 // Inital shares service object
 const transactionFormUtils = {};
@@ -19,6 +20,14 @@ transactionFormUtils.checkValidTicket = async ticket => {
 };
 
 // Get current price of ticket
+transactionFormUtils.getTicketPrice = async (ticket, shares_amount) => {
+  const currentPrice = await sharesUtils.convertSharesToCurrentPrice(
+    ticket,
+    shares_amount
+  );
+
+  return currentPrice;
+};
 
 // Check if quantity is whole number
 
