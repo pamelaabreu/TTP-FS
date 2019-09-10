@@ -1,11 +1,12 @@
 // Dependencies
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
 // Services
 import firebase from "../firebase";
 import usersAPIService from "../services/usersAPI";
 
-const Signup = props => {
+const Signup = withRouter(props => {
   const [inputs, setInputs] = useState({ name: "", email: "", password: "" });
 
   // Updates input values held in state
@@ -65,6 +66,6 @@ const Signup = props => {
       <button type="submit">Signup</button>
     </form>
   );
-};
+});
 
 export default Signup;
