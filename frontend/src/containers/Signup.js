@@ -42,29 +42,38 @@ const Signup = withRouter(props => {
   const inputsArray = Object.entries(inputs);
 
   return (
-    <form onSubmit={handleSignupSubmit}>
-      {inputsArray.map(([inputName, inputValue], index) => {
-        const inputType =
-          inputName.toLowerCase() === "password" ? "password" : "text";
-        return (
-          <div className="form-group" key={index}>
-            <label htmlFor={inputName}>{inputName}</label>
-            <input
-              onChange={handleInputChange}
-              key={index}
-              type={inputType}
-              value={inputValue}
-              name={inputName}
-              required
-              aria-label={`${inputName}`}
-              id={inputName}
-              min="1"
-            />
-          </div>
-        );
-      })}
-      <button type="submit">Signup</button>
-    </form>
+    <div className="p-5">
+      <h3 className="h3 text-white">Signup</h3>
+      <form className="form-group" onSubmit={handleSignupSubmit}>
+        {inputsArray.map(([inputName, inputValue], index) => {
+          const inputType =
+            inputName.toLowerCase() === "password" ? "password" : "text";
+          return (
+            <div className="form-group" key={index}>
+              <label className="text-white" htmlFor={inputName}>
+                {inputName}
+              </label>
+              <input
+                className="form-control"
+                onChange={handleInputChange}
+                placeholder={inputName}
+                key={index}
+                type={inputType}
+                value={inputValue}
+                name={inputName}
+                required
+                aria-label={`${inputName}`}
+                id={inputName}
+                min="1"
+              />
+            </div>
+          );
+        })}
+        <button className="btn btn-primary" type="submit">
+          Signup
+        </button>
+      </form>
+    </div>
   );
 });
 
