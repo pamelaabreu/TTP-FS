@@ -24,10 +24,10 @@ const Navbar = withRouter(props => {
             Logout
           </button>
           <div className="d-flex">
-            <Link className="nav-item m-2 h3" to="/portfolio">
+            <Link className="nav-item m-2 h3 text-white" to="/portfolio">
               Portfolio
             </Link>
-            <Link className="nav-item m-2 h3" to="/transactions">
+            <Link className="nav-item m-2 h3 text-white" to="/transactions">
               Transactions
             </Link>
           </div>
