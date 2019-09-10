@@ -6,6 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 import FirebaseAuthContext from "../context/FirebaseAuth";
 
 const Navbar = withRouter(props => {
+  // Initialize FirebaseUserAuth Context
   const FirebaseUserAuth = useContext(FirebaseAuthContext);
 
   const UserLogout = () => {

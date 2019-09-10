@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import ShowLoginOrSignup from "./containers/ShowLoginOrSignup";
 
 const App = () => {
+  // Initialize FirebaseUserAuth Context
   const FirebaseUserAuth = useContext(FirebaseAuthContext);
 
   return (
