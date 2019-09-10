@@ -20,31 +20,33 @@ const TransactionForm = props => {
 
   // Updates the user's cashBalance
   useEffect(() => {
-    if(cashBalance === 0){
-      usersAPIService.readAllUserCashBalance("default@testing.com").then(({data}) => setCashBalance(data.cash_balance))
+    if (cashBalance === 0) {
+      usersAPIService
+        .readAllUserCashBalance("default@testing.com")
+        .then(({ data }) => setCashBalance(data.cash_balance));
     }
   }, [cashBalance]);
 
   // Validate ticket
   useEffect(() => {
-    if(ticket.length > 0){
+    if (ticket.length > 0) {
       const isValid = transactionFormUtils.checkValidTicket(ticket);
-      if(isValid){
+      if (isValid) {
         setIsValidTicket(true);
         // remove error messgae
       } else {
         setIsValidTicket(false);
         // set error message
       }
-    };  
+    }
   }, [ticket]);
 
   // Validate quantity
   useEffect(() => {
-    if(quantity.length > 0){
+    if (quantity.length > 0) {
       const isValid = transactionFormUtils.isWholeNum(quantity);
 
-      if(isValid){
+      if (isValid) {
         setIsValidQuantity(true);
         // remove error messgae
       } else {
@@ -55,16 +57,14 @@ const TransactionForm = props => {
 
   // Get ticket amount
   useEffect(() => {
-    if(isValidTicket && isValidQuantity){
-      const currentPrice = transactionFormUtils.getTicketPrice(ticket.toUpperCase(), parseInt(quantity));
-      console.log("Current Price", currentPrice)
-      setTicketAmount(currentPrice);
+    if (isValidTicket && isValidQuantity) {
+      transactionFormUtils
+        .getTicketPrice(ticket.toUpperCase(), parseInt(quantity))
+        .then(ticketPrice => setTicketAmount(ticketPrice));
     } else {
       setTicketAmount(0);
     }
   }, [isValidTicket, isValidQuantity]);
-
-  useEffect(() => console.log("ticketAmount", ticketAmount))
 
   return (
     <div>
