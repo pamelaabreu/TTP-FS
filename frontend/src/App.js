@@ -16,9 +16,11 @@ const App = () => {
       <div className="App">
         <header className="App-header">
           <Navbar />
+        </header>
+        <div>
           <Transactions />
           <Portfolio />
-        </header>
+        </div>
       </div>
     </HashRouter>
   );
