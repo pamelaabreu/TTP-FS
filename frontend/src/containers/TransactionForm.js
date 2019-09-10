@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 // Services
 import usersAPIService from "../services/usersAPI";
+import transactionsAPIService from "../services/transactionsAPI";
 import transactionFormUtils from "../utilities/transactionFormUtils";
 
 const TransactionForm = props => {
@@ -18,7 +19,6 @@ const TransactionForm = props => {
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
 
-  const [buttonDisable, setButtonDisable] = useState(true);
   const [errorMessages, setErrorMessages] = useState([]);
 
   // Updates the user's cashBalance
@@ -73,9 +73,12 @@ const TransactionForm = props => {
   // Check if user has enough cash to buy shares
   useEffect(() => {
     // isValidTicketAmount
-    if(ticketAmount > 0){
-      const isEnoughCash = transactionFormUtils.isEnoughCash(cashBalance, ticketAmount);
-      if(isEnoughCash){
+    if (ticketAmount > 0) {
+      const isEnoughCash = transactionFormUtils.isEnoughCash(
+        cashBalance,
+        ticketAmount
+      );
+      if (isEnoughCash) {
         setIsValidCashBalance(true);
         // remove error messgae
       } else {
@@ -84,6 +87,20 @@ const TransactionForm = props => {
       }
     }
   }, [ticketAmount]);
+
+  // Buy share
+  const buyShare = e => {
+    e.preventDefault();
+
+    if (isValidCashBalance && isValidTicket && isValidQuantity) {
+      transactionsAPIService.createTransaction(
+        "default@testing.com",
+        ticket.toUpperCase(),
+        ticketAmount,
+        quantity
+      );
+    }
+  };
 
   return (
     <div>
@@ -112,11 +129,7 @@ const TransactionForm = props => {
           required
           onChange={e => setQuantity(e.target.value)}
         />
-        <button
-          type="submit button"
-          // onClick={resetName}
-          //   disabled
-        >
+        <button type="submit button" onClick={buyShare}>
           Next
         </button>
       </form>
