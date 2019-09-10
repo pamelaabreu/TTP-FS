@@ -1,5 +1,8 @@
 // Dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+// Context
+import FirebaseAuthContext from "../context/FirebaseAuth";
 
 // Component
 import ListItems from "../components/ListItems";
@@ -9,14 +12,28 @@ import sharesAPIService from "../services/sharesAPI";
 import sharesUtils from "../utilities/sharesUtils";
 
 const Shares = props => {
+  // Initialize FirebaseUserAuth Context
+  const FirebaseUserAuth = useContext(FirebaseAuthContext);
+
+  // State
   const [sharesList, setSharesList] = useState([]);
   const [portfolioAmount, setPortfolioAmount] = useState(0);
+  const [userEmail, setUserEmail] = useState(null);
+
+  // Use Firebase context to determine logged in user's email
+  useEffect(() => {
+    if (FirebaseUserAuth.user) {
+      setUserEmail(FirebaseUserAuth.user.email);
+    } else {
+      setUserEmail(null);
+    }
+  }, [userEmail, FirebaseUserAuth.user]);
 
   // Updates the sharesList and portfolioAmount
   useEffect(() => {
     if (sharesList.length === 0) {
       sharesAPIService
-        .readAllShares("default@testing.com")
+        .readAllShares(userEmail)
         .then(({ data }) => {
           // Convert data set to include currentPrice and perfomance values
           return sharesUtils.convertSharesArray(data);
@@ -28,7 +45,7 @@ const Shares = props => {
           setPortfolioAmount(totalPortfolioAmount);
         });
     }
-  }, [sharesList, portfolioAmount]);
+  }, [sharesList, portfolioAmount, userEmail]);
 
   return (
     <div>
