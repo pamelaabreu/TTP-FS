@@ -65,7 +65,7 @@ const Login = withRouter(props => {
             </div>
           );
         })}
-        <button className="btn btn-primary" type="submit">
+        <button className="btn btn-info" type="submit">
           Login
         </button>
       </form>
