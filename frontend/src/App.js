@@ -1,9 +1,9 @@
 // Dependencies
-import React from 'react';
-import {Switch, Route, Hashrouter} from "react-router-dom";
+import React from "react";
+import { Switch, Route, HashRouter } from "react-router-dom";
 
 // CSS
-import './App.css';
+import "./App.css";
 
 // Pages
 import Transactions from "./containers/Transactions";
@@ -12,13 +12,15 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Navbar />
-        <Transactions />
-        <Portfolio />
-      </header>
-    </div>
+    <HashRouter>
+      <div className="App">
+        <header className="App-header">
+          <Navbar />
+          <Transactions />
+          <Portfolio />
+        </header>
+      </div>
+    </HashRouter>
   );
 };
 
