@@ -1,5 +1,8 @@
 // Dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+// Context
+import FirebaseAuthContext from "../context/FirebaseAuth";
 
 // Services
 import usersAPIService from "../services/usersAPI";
@@ -7,25 +10,40 @@ import transactionsAPIService from "../services/transactionsAPI";
 import transactionFormUtils from "../utilities/transactionFormUtils";
 
 const TransactionForm = props => {
+  // Initialize FirebaseUserAuth Context
+  const FirebaseUserAuth = useContext(FirebaseAuthContext);
+
+  // State
+  const [userEmail, setUserEmail] = useState(null);
+
+  const [ticketAmount, setTicketAmount] = useState(0);
+
   const [cashBalance, setCashBalance] = useState(0);
   const [isValidCashBalance, setIsValidCashBalance] = useState(false);
 
   const [ticket, setTicket] = useState("");
   const [isValidTicket, setIsValidTicket] = useState(false);
 
-  const [ticketAmount, setTicketAmount] = useState(0);
-
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
+
+  // Use Firebase context to determine logged in user's email
+  useEffect(() => {
+    if (FirebaseUserAuth.user) {
+      setUserEmail(FirebaseUserAuth.user.email);
+    } else {
+      setUserEmail(null);
+    }
+  }, [userEmail, FirebaseUserAuth.user]);
 
   // Updates the user's cashBalance
   useEffect(() => {
     if (cashBalance === 0) {
       usersAPIService
-        .readAllUserCashBalance("default@testing.com")
+        .readAllUserCashBalance(userEmail)
         .then(({ data }) => setCashBalance(data.cash_balance));
     }
-  }, [cashBalance]);
+  }, [cashBalance, userEmail]);
 
   // Validate ticket
   useEffect(() => {
@@ -90,7 +108,7 @@ const TransactionForm = props => {
 
     if (isValidCashBalance && isValidTicket && isValidQuantity) {
       transactionsAPIService.createTransaction(
-        "default@testing.com",
+        userEmail,
         ticket.toUpperCase(),
         ticketAmount,
         quantity
