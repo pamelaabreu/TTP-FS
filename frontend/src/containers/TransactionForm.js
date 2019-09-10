@@ -82,7 +82,7 @@ const TransactionForm = props => {
         // set error message
       }
     }
-  }, [ticketAmount]);
+  }, [ticketAmount, cashBalance]);
 
   // Buy share
   const buyShare = e => {
