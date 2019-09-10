@@ -6,7 +6,6 @@ import ListItems from "../components/ListItems";
 
 // Services
 import sharesAPIService from "../services/sharesAPI";
-import IEXAPIService from "../services/IEXAPI";
 import sharesUtils from "../utilities/sharesUtils";
 
 const Shares = props => {
