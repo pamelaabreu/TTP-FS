@@ -1,13 +1,60 @@
-body {
+/* Imports google fonts directly into the CSS */
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+/* 
+font-family: "Muli", sans-serif; 
+font-family: 'Baloo', cursive;
+*/
+
+/* Removes any DEFAULT padding or margin from all elements */
+* {
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+/* Adds the box sizing to every element */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* includes the padding in the dimensions of the boxes */
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 10/16 =.625 10px*/
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --navy: #293462;
+  --teal: #00818a;
+  --yellow: #f7be16;
+}
+
+.bg-navy {
+  background: var(--navy);
+}
+
+.bg-teal {
+  background: var(--teal);
+}
+
+.bg-yellow {
+  background: var(--yellow);
+}
+
+.c-navy {
+  color: var(--navy);
+}
+
+.c-teal {
+  color: var(--teal);
+}
+
+.c-yellow {
+  color: var(--yellow);
 }
