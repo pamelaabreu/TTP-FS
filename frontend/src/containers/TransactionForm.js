@@ -72,7 +72,6 @@ const TransactionForm = props => {
 
   // Check if user has enough cash to buy shares
   useEffect(() => {
-    // isValidTicketAmount
     if (ticketAmount > 0) {
       const isEnoughCash = transactionFormUtils.isEnoughCash(
         cashBalance,
