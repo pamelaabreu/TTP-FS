@@ -65,7 +65,7 @@ const TransactionForm = props => {
     } else {
       setTicketAmount(0);
     }
-  }, [isValidTicket, isValidQuantity]);
+  }, [isValidTicket, isValidQuantity, ticket, quantity]);
 
   // Check if user has enough cash to buy shares
   useEffect(() => {
