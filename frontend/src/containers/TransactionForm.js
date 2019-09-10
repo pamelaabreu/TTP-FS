@@ -13,6 +13,7 @@ const TransactionForm = props => {
   const [ticketAmount, setTicketAmount] = useState(0);
 
   const [quantity, setQuantity] = useState("");
+  const [isValidQuantity, setIsValidQuantity] = useState(false);
 
   const [buttonDisable, setButtonDisable] = useState(true);
   const [errorMessages, setErrorMessages] = useState([]);
@@ -37,6 +38,16 @@ const TransactionForm = props => {
       }
     };  
   }, [ticket]);
+
+  // Get ticket amount
+  useEffect(() => {
+    if(isValidTicket && isValidQuantity){
+      const currentPrice = transactionFormUtils.getTicketPrice(ticket.toUpperCase(), parseInt(quantity));
+      setTicketAmount(currentPrice);
+    } else {
+      setTicketAmount(0);
+    }
+  }, [isValidTicket, isValidQuantity]);
 
   return (
     <div>
