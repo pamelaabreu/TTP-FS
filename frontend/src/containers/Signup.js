@@ -29,7 +29,10 @@ const Signup = props => {
       .createUserWithEmailAndPassword(email, password)
       .then(response => response.user.uid)
       // Create user in the Postgres database
-      .then(firebaseUid => usersAPIService.createUser(name, email, firebaseUid))
+      .then(
+        firebaseUid => usersAPIService.createUser(name, email, firebaseUid),
+        err => console.log("Trouble Creating DB User Error", err)
+      )
       // Re-direct page to /portfolio
       .then(() => props.history.push("/portfolio"))
       .catch(err => console.log("Trouble Creating Firebase User Error", err));
