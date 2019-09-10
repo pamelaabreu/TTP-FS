@@ -1,5 +1,6 @@
 // Dependencies
 import React from 'react';
+import {Switch, Route, Hashrouter} from "react-router-dom";
 
 // CSS
 import './App.css';
