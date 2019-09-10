@@ -7,10 +7,13 @@ import transactionFormUtils from "../utilities/transactionFormUtils";
 
 const TransactionForm = props => {
   const [cashBalance, setCashBalance] = useState(0);
+  const [isValidCashBalance, setIsValidCashBalance] = useState(false);
 
   const [ticket, setTicket] = useState("");
   const [isValidTicket, setIsValidTicket] = useState(false);
+
   const [ticketAmount, setTicketAmount] = useState(0);
+  const [isValidTicketAmount, setIsValidTicketAmount] = useState(false);
 
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
@@ -51,6 +54,7 @@ const TransactionForm = props => {
         // remove error messgae
       } else {
         setIsValidQuantity(false);
+        // set error message
       }
     }
   }, [quantity]);
@@ -65,6 +69,21 @@ const TransactionForm = props => {
       setTicketAmount(0);
     }
   }, [isValidTicket, isValidQuantity]);
+
+  // Check if user has enough cash to buy shares
+  useEffect(() => {
+    // isValidTicketAmount
+    if(ticketAmount > 0){
+      const isEnoughCash = transactionFormUtils.isEnoughCash(cashBalance, ticketAmount);
+      if(isEnoughCash){
+        setIsValidCashBalance(true);
+        // remove error messgae
+      } else {
+        setIsValidCashBalance(false);
+        // set error message
+      }
+    }
+  }, [ticketAmount]);
 
   return (
     <div>
