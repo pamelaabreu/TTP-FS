@@ -34,6 +34,7 @@ const Shares = props => {
     if (sharesList.length === 0) {
       sharesAPIService
         .readAllShares(userEmail)
+        // .readAllShares("default@testing.com")
         .then(({ data }) => {
           // Convert data set to include currentPrice and perfomance values
           return sharesUtils.convertSharesArray(data);
@@ -49,7 +50,7 @@ const Shares = props => {
 
   return (
     <div>
-      <h1>Portfolio (${portfolioAmount})</h1>
+      <h1 className="text-white h1 mb-5">Portfolio (${portfolioAmount})</h1>
       <div>
         {sharesList.map((value, index) => {
           const { currentPrice, performance, shares_amount, ticket } = value;

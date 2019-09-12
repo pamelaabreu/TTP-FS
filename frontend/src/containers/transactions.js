@@ -32,6 +32,7 @@ const Transactions = props => {
     if (transactionsList.length === 0) {
       transactionsAPIService
         .readAllUserTransaction(userEmail)
+        // .readAllUserTransaction("default@testing.com")
         .then(({ data }) => {
           setTransactionsList(data);
         })
@@ -40,8 +41,8 @@ const Transactions = props => {
   }, [transactionsList, userEmail]);
 
   return (
-    <div>
-      <h1>Transactions</h1>
+    <div className="p-5">
+      <h1 className="h1 text-white mb-5">Transactions</h1>
       <div>
         {transactionsList.map((value, index) => {
           const { shares_amount, ticket, transaction_price } = value;

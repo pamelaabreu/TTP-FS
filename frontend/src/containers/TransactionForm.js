@@ -41,6 +41,7 @@ const TransactionForm = props => {
     if (cashBalance === 0) {
       usersAPIService
         .readAllUserCashBalance(userEmail)
+        // .readAllUserCashBalance("default@testing.com")
         .then(({ data }) => setCashBalance(data.cash_balance));
     }
   }, [cashBalance, userEmail]);
@@ -106,9 +107,11 @@ const TransactionForm = props => {
   const buyShare = e => {
     e.preventDefault();
 
+    console.log("About to make transaction")
     if (isValidCashBalance && isValidTicket && isValidQuantity) {
       transactionsAPIService.createTransaction(
         userEmail,
+        // "default@testing.com",
         ticket.toUpperCase(),
         ticketAmount,
         quantity
@@ -118,10 +121,12 @@ const TransactionForm = props => {
 
   return (
     <div>
-      <h3>Cash - ${cashBalance}</h3>
+      <h3 className="h3 text-white mb-5">Cash - ${cashBalance}</h3>
       <form>
-        <label htmlFor="ticket">Ticket</label>
+      <div className="form-group">
+        <label className="text-white" htmlFor="ticket">Ticket</label>
         <input
+        className="form-control"
           type="text"
           name="ticket"
           value={ticket}
@@ -131,9 +136,12 @@ const TransactionForm = props => {
           required
           onChange={e => setTicket(e.target.value)}
         />
+        </div>
 
-        <label htmlFor="quantity">QTY</label>
+        <div className="form-group">
+        <label className="text-white" htmlFor="quantity">QTY</label>
         <input
+        className="form-control"
           type="number"
           name="quantity"
           value={quantity}
@@ -143,7 +151,8 @@ const TransactionForm = props => {
           required
           onChange={e => setQuantity(e.target.value)}
         />
-        <button type="submit button" onClick={buyShare}>
+        </div>
+        <button className="btn btn-info" type="submit button" onClick={buyShare}>
           Buy
         </button>
       </form>
