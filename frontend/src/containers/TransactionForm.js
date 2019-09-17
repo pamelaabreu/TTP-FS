@@ -35,12 +35,10 @@ const TransactionForm = props => {
       const userEmail = FirebaseUserAuth.user.email;
 
       // GET request to get user's cash balance
-      usersAPIService
-        .readAllUserCashBalance(userEmail)
-        .then(({ data }) => {
-          setUserEmail(userEmail);
-          setCashBalance(data.cash_balance);
-        });
+      usersAPIService.readAllUserCashBalance(userEmail).then(({ data }) => {
+        setUserEmail(userEmail);
+        setCashBalance(data.cash_balance);
+      });
     } else {
       // If Firebase context has no logged in user's email, setState default values
       setUserEmail(null);
@@ -123,36 +121,44 @@ const TransactionForm = props => {
     <div>
       <h3 className="h3 text-white mb-5">Cash - ${cashBalance}</h3>
       <form>
-      <div className="form-group">
-        <label className="text-white" htmlFor="ticket">Ticket</label>
-        <input
-        className="form-control"
-          type="text"
-          name="ticket"
-          value={ticket}
-          placeholder="Ticket"
-          aria-label="Ticket"
-          aria-describedby="Ticket"
-          required
-          onChange={e => setTicket(e.target.value)}
-        />
+        <div className="form-group">
+          <label className="text-white" htmlFor="ticket">
+            Ticket
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="ticket"
+            value={ticket}
+            placeholder="Ticket"
+            aria-label="Ticket"
+            aria-describedby="Ticket"
+            required
+            onChange={e => setTicket(e.target.value)}
+          />
         </div>
 
         <div className="form-group">
-        <label className="text-white" htmlFor="quantity">QTY</label>
-        <input
-        className="form-control"
-          type="number"
-          name="quantity"
-          value={quantity}
-          placeholder="Quantity"
-          aria-label="Quantity"
-          aria-describedby="Quantity"
-          required
-          onChange={e => setQuantity(e.target.value)}
-        />
+          <label className="text-white" htmlFor="quantity">
+            QTY
+          </label>
+          <input
+            className="form-control"
+            type="number"
+            name="quantity"
+            value={quantity}
+            placeholder="Quantity"
+            aria-label="Quantity"
+            aria-describedby="Quantity"
+            required
+            onChange={e => setQuantity(e.target.value)}
+          />
         </div>
-        <button className="btn btn-info" type="submit button" onClick={buyShare}>
+        <button
+          className="btn btn-info"
+          type="submit button"
+          onClick={buyShare}
+        >
           Buy
         </button>
       </form>
