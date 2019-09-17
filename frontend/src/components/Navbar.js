@@ -19,10 +19,18 @@ const Navbar = withRouter(props => {
       {!FirebaseUserAuth.user ? (
         <></>
       ) : (
-        <div>
-          <button onClick={UserLogout}>Logout</button>
-          <Link to="/portfolio">Portfolio</Link>
-          <Link to="/transactions">Transactions</Link>
+        <div className="nav d-flex justify-content-between">
+          <button className="h3 btn btn-info m-3" onClick={UserLogout}>
+            Logout
+          </button>
+          <div className="d-flex">
+            <Link className="nav-item m-2 h3 text-white" to="/portfolio">
+              Portfolio
+            </Link>
+            <Link className="nav-item m-2 h3 text-white" to="/transactions">
+              Transactions
+            </Link>
+          </div>
         </div>
       )}
     </>

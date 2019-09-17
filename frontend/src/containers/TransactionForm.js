@@ -27,23 +27,24 @@ const TransactionForm = props => {
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
 
-  // Use Firebase context to determine logged in user's email
+  // Updates the user's cashBalance and userEmail
   useEffect(() => {
+    // Use Firebase context to determine logged in user's email
     if (FirebaseUserAuth.user) {
-      setUserEmail(FirebaseUserAuth.user.email);
-    } else {
-      setUserEmail(null);
-    }
-  }, [userEmail, FirebaseUserAuth.user]);
+      // Save Firebase user's email to userEmail variable
+      const userEmail = FirebaseUserAuth.user.email;
 
-  // Updates the user's cashBalance
-  useEffect(() => {
-    if (cashBalance === 0) {
-      usersAPIService
-        .readAllUserCashBalance(userEmail)
-        .then(({ data }) => setCashBalance(data.cash_balance));
+      // GET request to get user's cash balance
+      usersAPIService.readAllUserCashBalance(userEmail).then(({ data }) => {
+        setUserEmail(userEmail);
+        setCashBalance(data.cash_balance);
+      });
+    } else {
+      // If Firebase context has no logged in user's email, setState default values
+      setUserEmail(null);
+      setCashBalance(0);
     }
-  }, [cashBalance, userEmail]);
+  }, [cashBalance, userEmail, FirebaseUserAuth.user]);
 
   // Validate ticket
   useEffect(() => {
@@ -118,32 +119,46 @@ const TransactionForm = props => {
 
   return (
     <div>
-      <h3>Cash - ${cashBalance}</h3>
+      <h3 className="h3 text-white mb-5">Cash - ${cashBalance}</h3>
       <form>
-        <label htmlFor="ticket">Ticket</label>
-        <input
-          type="text"
-          name="ticket"
-          value={ticket}
-          placeholder="Ticket"
-          aria-label="Ticket"
-          aria-describedby="Ticket"
-          required
-          onChange={e => setTicket(e.target.value)}
-        />
+        <div className="form-group">
+          <label className="text-white" htmlFor="ticket">
+            Ticket
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="ticket"
+            value={ticket}
+            placeholder="Ticket"
+            aria-label="Ticket"
+            aria-describedby="Ticket"
+            required
+            onChange={e => setTicket(e.target.value)}
+          />
+        </div>
 
-        <label htmlFor="quantity">QTY</label>
-        <input
-          type="number"
-          name="quantity"
-          value={quantity}
-          placeholder="Quantity"
-          aria-label="Quantity"
-          aria-describedby="Quantity"
-          required
-          onChange={e => setQuantity(e.target.value)}
-        />
-        <button type="submit button" onClick={buyShare}>
+        <div className="form-group">
+          <label className="text-white" htmlFor="quantity">
+            QTY
+          </label>
+          <input
+            className="form-control"
+            type="number"
+            name="quantity"
+            value={quantity}
+            placeholder="Quantity"
+            aria-label="Quantity"
+            aria-describedby="Quantity"
+            required
+            onChange={e => setQuantity(e.target.value)}
+          />
+        </div>
+        <button
+          className="btn btn-info"
+          type="submit button"
+          onClick={buyShare}
+        >
           Buy
         </button>
       </form>

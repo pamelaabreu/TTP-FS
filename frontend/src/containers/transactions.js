@@ -18,30 +18,31 @@ const Transactions = props => {
   const [userEmail, setUserEmail] = useState(null);
   const [transactionsList, setTransactionsList] = useState([]);
 
-  // Use Firebase context to determine logged in user's email
+  // Updates the transactionsList and userEmail
   useEffect(() => {
+    // Use Firebase context to determine logged in user's email
     if (FirebaseUserAuth.user) {
-      setUserEmail(FirebaseUserAuth.user.email);
-    } else {
-      setUserEmail(null);
-    }
-  }, [userEmail, FirebaseUserAuth.user]);
+      // Save Firebase user's email to userEmail variable
+      const userEmail = FirebaseUserAuth.user.email;
 
-  // Updates the transactionsList
-  useEffect(() => {
-    if (transactionsList.length === 0) {
+      // GET request to get user's transactions
       transactionsAPIService
         .readAllUserTransaction(userEmail)
         .then(({ data }) => {
+          setUserEmail(userEmail);
           setTransactionsList(data);
         })
         .catch();
+    } else {
+      // If Firebase context has no logged in user's email, setState default values
+      setUserEmail(null);
+      setTransactionsList([]);
     }
-  }, [transactionsList, userEmail]);
+  }, [transactionsList, userEmail, FirebaseUserAuth.user]);
 
   return (
-    <div>
-      <h1>Transactions</h1>
+    <div className="p-5">
+      <h1 className="h1 text-white mb-5">Transactions</h1>
       <div>
         {transactionsList.map((value, index) => {
           const { shares_amount, ticket, transaction_price } = value;

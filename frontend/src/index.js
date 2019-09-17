@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import FirebaseAuthProvider from "./containers/FirebaseAuthProvider";
+import "bootstrap/dist/css/bootstrap.css";
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 

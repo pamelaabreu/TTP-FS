@@ -20,12 +20,14 @@ const App = () => {
 
   return (
     <HashRouter>
-      <div className="App">
+      <div className="container-fluid vh-100 bg-navy">
         {!FirebaseUserAuth.user ? (
+          <div className="d-flex justify-content-center pt-5">
           <Route path="/" component={ShowLoginOrSignup} />
+          </div>
         ) : (
-          <>
-            <header>
+          <div className="d-flex flex-column">
+            <header className="p-5">
               <Route path="/" component={Navbar} />
             </header>
             <div>
@@ -34,7 +36,7 @@ const App = () => {
                 <Route path="/portfolio" exact component={Portfolio} />
               </Switch>
             </div>
-          </>
+          </div>
         )}
       </div>
     </HashRouter>

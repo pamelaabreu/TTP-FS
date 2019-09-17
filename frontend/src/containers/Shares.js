@@ -20,36 +20,40 @@ const Shares = props => {
   const [portfolioAmount, setPortfolioAmount] = useState(0);
   const [userEmail, setUserEmail] = useState(null);
 
-  // Use Firebase context to determine logged in user's email
+  // Updates the sharesList, portfolioAmount, userEmail
   useEffect(() => {
+    // Use Firebase context to determine logged in user's email
     if (FirebaseUserAuth.user) {
-      setUserEmail(FirebaseUserAuth.user.email);
-    } else {
-      setUserEmail(null);
-    }
-  }, [userEmail, FirebaseUserAuth.user]);
+      // Save Firebase user's email to userEmail variable
+      const userEmail = FirebaseUserAuth.user.email;
 
-  // Updates the sharesList and portfolioAmount
-  useEffect(() => {
-    if (sharesList.length === 0) {
+      // GET request to get user's shares
       sharesAPIService
         .readAllShares(userEmail)
         .then(({ data }) => {
-          // Convert data set to include currentPrice and perfomance values
+          // Convert data array to include currentPrice and perfomance values
           return sharesUtils.convertSharesArray(data);
         })
         .then(convertedData => {
-          // Convert data set to include currentPrice and perfomance values
+          // Convert data set to one value to determine user's portfolio amount
           const totalPortfolioAmount = sharesUtils.addTotal(convertedData);
+
+          // Set State
+          setUserEmail(userEmail);
           setSharesList(convertedData);
           setPortfolioAmount(totalPortfolioAmount);
         });
+    } else {
+      // If Firebase context has no logged in user's email, setState default values
+      setUserEmail(null);
+      setSharesList([]);
+      setPortfolioAmount(0);
     }
-  }, [sharesList, portfolioAmount, userEmail]);
+  }, [sharesList, portfolioAmount, userEmail, FirebaseUserAuth.user]);
 
   return (
     <div>
-      <h1>Portfolio (${portfolioAmount})</h1>
+      <h1 className="text-white h1 mb-5">Portfolio (${portfolioAmount})</h1>
       <div>
         {sharesList.map((value, index) => {
           const { currentPrice, performance, shares_amount, ticket } = value;
