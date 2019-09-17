@@ -20,7 +20,7 @@ const Shares = props => {
   const [portfolioAmount, setPortfolioAmount] = useState(0);
   const [userEmail, setUserEmail] = useState(null);
 
-  // Updates the sharesList and portfolioAmount
+  // Updates the sharesList, portfolioAmount, userEmail
   useEffect(() => {
     // Use Firebase context to determine logged in user's email
     if (FirebaseUserAuth.user) {
