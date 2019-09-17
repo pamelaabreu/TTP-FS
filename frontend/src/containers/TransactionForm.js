@@ -27,24 +27,26 @@ const TransactionForm = props => {
   const [quantity, setQuantity] = useState("");
   const [isValidQuantity, setIsValidQuantity] = useState(false);
 
-  // Use Firebase context to determine logged in user's email
+  // Updates the user's cashBalance and userEmail
   useEffect(() => {
+    // Use Firebase context to determine logged in user's email
     if (FirebaseUserAuth.user) {
-      setUserEmail(FirebaseUserAuth.user.email);
-    } else {
-      setUserEmail(null);
-    }
-  }, [userEmail, FirebaseUserAuth.user]);
+      // Save Firebase user's email to userEmail variable
+      const userEmail = FirebaseUserAuth.user.email;
 
-  // Updates the user's cashBalance
-  useEffect(() => {
-    if (cashBalance === 0) {
+      // GET request to get user's cash balance
       usersAPIService
         .readAllUserCashBalance(userEmail)
-        // .readAllUserCashBalance("default@testing.com")
-        .then(({ data }) => setCashBalance(data.cash_balance));
+        .then(({ data }) => {
+          setUserEmail(userEmail);
+          setCashBalance(data.cash_balance);
+        });
+    } else {
+      // If Firebase context has no logged in user's email, setState default values
+      setUserEmail(null);
+      setCashBalance(0);
     }
-  }, [cashBalance, userEmail]);
+  }, [cashBalance, userEmail, FirebaseUserAuth.user]);
 
   // Validate ticket
   useEffect(() => {
@@ -107,11 +109,9 @@ const TransactionForm = props => {
   const buyShare = e => {
     e.preventDefault();
 
-    console.log("About to make transaction")
     if (isValidCashBalance && isValidTicket && isValidQuantity) {
       transactionsAPIService.createTransaction(
         userEmail,
-        // "default@testing.com",
         ticket.toUpperCase(),
         ticketAmount,
         quantity
