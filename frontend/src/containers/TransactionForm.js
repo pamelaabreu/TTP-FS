@@ -49,6 +49,7 @@ const TransactionForm = props => {
   // Validate ticket
   useEffect(() => {
     if (ticket.length > 0) {
+      // Utility function to check if ticket is valid, returns boolean
       const isValid = transactionFormUtils.checkValidTicket(ticket);
       if (isValid) {
         setIsValidTicket(true);
@@ -63,6 +64,7 @@ const TransactionForm = props => {
   // Validate quantity
   useEffect(() => {
     if (quantity.length > 0) {
+      // Utility function to check if ticket quantity is a whole number, returns boolean
       const isValid = transactionFormUtils.isWholeNum(quantity);
 
       if (isValid) {
@@ -78,8 +80,10 @@ const TransactionForm = props => {
   // Get ticket amount
   useEffect(() => {
     if (isValidTicket && isValidQuantity) {
+      // GET request to get ticket amount
       transactionFormUtils
         .getTicketPrice(ticket.toUpperCase(), parseInt(quantity))
+        // Set Ticket Amount in state
         .then(ticketPrice => setTicketAmount(ticketPrice));
     } else {
       setTicketAmount(0);
@@ -89,6 +93,7 @@ const TransactionForm = props => {
   // Check if user has enough cash to buy shares
   useEffect(() => {
     if (ticketAmount > 0) {
+      // Utility function to check if user has enough cash to buy, returns boolean
       const isEnoughCash = transactionFormUtils.isEnoughCash(
         cashBalance,
         ticketAmount
@@ -108,6 +113,7 @@ const TransactionForm = props => {
     e.preventDefault();
 
     if (isValidCashBalance && isValidTicket && isValidQuantity) {
+      // POST request to make a transaction
       transactionsAPIService.createTransaction(
         userEmail,
         ticket.toUpperCase(),
